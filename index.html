@@ -1730,6 +1730,7 @@ function events(count){
 function labels(e){
   const a=[];
   if((e.hero||e.secondHero)&&key(e.date)!=='2026-10-05')a.push('<span class="tc-badge tc-new-hero">🆕 Nouveau héros</span>');
+if(key(e.date)==='2026-11-02')a.push('<span class="tc-badge tc-new-hero">🆕 Nouveau héros</span>');
   if(e.info)a.push('<span class="tc-badge">'+e.info+'</span>');
   if(e.reinforce)a.push('<span class="tc-badge tc-reinforce">🏆 Défi de renforcement</span>');
   return a.join(' ')||'—';
