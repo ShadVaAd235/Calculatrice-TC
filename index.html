@@ -613,12 +613,37 @@ nav button{padding:8px 14px;}
 @media(max-width:1250px){#tabs{gap:7px!important}.phase-nav-group,.tools-buttons{gap:5px}.tools-nav-group{flex-basis:100%;justify-content:center}.tools-label{max-width:none}.tools-buttons{flex-wrap:wrap;justify-content:center}}
 @media(max-width:720px){#tabs{padding:7px 8px 9px!important}.phase-nav-group{width:100%;justify-content:center;flex-wrap:wrap}.tools-nav-group{width:100%;flex-direction:column;gap:5px}.tools-buttons{width:100%}#tabs .tool-tab{flex:1 1 125px!important}.tc-prep-phase{min-height:48px}}
 </style>
+
+<style id="home-flow-refinement">
+/* Parcours d’accueil compact : contexte → aide facultative → récapitulatif */
+.tc-home-card{margin-bottom:8px;padding:11px 14px;border-color:rgba(201,162,74,.22);background:linear-gradient(145deg,rgba(110,73,18,.10),rgba(17,20,25,.94))}
+#calculator-disclaimer.usage-disclaimer{display:block!important;margin:0 0 10px;padding:0;border:1px solid rgba(255,255,255,.13);border-radius:8px;background:rgba(31,35,41,.82);overflow:hidden}
+#calculator-disclaimer .disclaimer-title{display:flex!important;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;cursor:pointer;list-style:none;font-size:11px;font-weight:700;color:#d7d7d7;user-select:none}
+#calculator-disclaimer .disclaimer-title::-webkit-details-marker{display:none}
+#calculator-disclaimer .disclaimer-title::after{content:'▾';color:#c9a24a;font-size:12px;transition:transform .18s ease}
+#calculator-disclaimer[open] .disclaimer-title::after{transform:rotate(180deg)}
+#calculator-disclaimer .disclaimer-content{padding:0 12px 10px;color:#bfc1c5;font-size:11px;line-height:1.45}
+.tc-prep-summary{margin-top:10px}
+.save-controls .reset-secondary{opacity:.82;border-color:rgba(201,162,74,.32);background:rgba(20,22,26,.88)}
+.save-controls .reset-secondary:hover{opacity:1}
+@media(max-width:720px){.tc-home-card{padding:10px 12px}.tc-prep-summary{margin-top:8px}}
+</style>
+
+<style id="tool-focus-mode">
+/* En mode outil, on masque le contexte réservé aux phases pour alléger la page. */
+body.tool-focus #tc-home-current,
+body.tool-focus #calculator-disclaimer,
+body.tool-focus #tcPrepSummary{display:none!important}
+body.tool-focus main{padding-top:14px}
+body.tool-focus .tools-page.active{margin-top:0}
+</style>
 </head>
 <body>
 <div class="save-controls" id="saveControls">
 <button type="button" id="saveCalcBtn">💾 Sauvegarder</button>
 <button type="button" id="loadCalcBtn">📂 Charger</button>
 <button type="button" id="clearCalcBtn">🗑️ Supprimer la sauvegarde</button>
+<button type="button" id="resetCalcBtn" class="reset-secondary" onclick="resetAll()">↻ Réinitialiser le simulateur</button>
 <span class="save-status" id="saveStatus"></span></div>
 
 <div class="text-size-controls" id="textSizeControls" aria-label="Taille du texte">
@@ -630,7 +655,7 @@ nav button{padding:8px 14px;}
 <header><div class="hero"><div class="top"><div class="brand">⚔ TOP COMMANDANT<small>SIMULATEUR DE POINTS</small></div>
 <div class="score"><small>SCORE TOTAL</small><strong id="grand">0</strong></div></div></div><nav id="tabs"></nav>
 <div class="prep-banner">💡 <span>Préparez votre Top Commandant en toute simplicité : renseignez vos données dans les différentes phases et n’hésitez pas à utiliser les outils pour optimiser votre préparation.</span></div></header>
-<main><div id="tc-home-current" class="tc-home-card" aria-live="polite"></div><div id="calculator-disclaimer"><div class="usage-disclaimer"><div class="disclaimer-title">⚠️ À savoir avant d’utiliser le simulateur</div><div>Le simulateur doit être utilisé avec les <strong>ressources réellement utilisables pendant le Top Commandant</strong>, et non avec la totalité de votre stock. Une ressource ne peut être comptabilisée que si elle permet de réaliser l’action correspondante. <strong>Exemple : pour une amélioration d’équipement du commandant, si vous n’avez pas assez de matériaux pour valider l’amélioration, les matériaux insuffisants restent dans votre sac et ne sont pas utilisés.</strong> Ne saisissez donc que les quantités que vous pourrez effectivement dépenser.</div></div></div><div class="toolbar"><button class="action" onclick="resetAll()">↻ Réinitialiser le simulateur</button></div>
+<main><div id="tc-home-current" class="tc-home-card" aria-live="polite"></div><details id="calculator-disclaimer" class="usage-disclaimer"><summary class="disclaimer-title">⚠️ À savoir avant d’utiliser le simulateur</summary><div class="disclaimer-content">Le simulateur doit être utilisé avec les <strong>ressources réellement utilisables pendant le Top Commandant</strong>, et non avec la totalité de votre stock. Une ressource ne peut être comptabilisée que si elle permet de réaliser l’action correspondante. <strong>Exemple : pour une amélioration d’équipement du commandant, si vous n’avez pas assez de matériaux pour valider l’amélioration, les matériaux insuffisants restent dans votre sac et ne sont pas utilisés.</strong> Ne saisissez donc que les quantités que vous pourrez effectivement dépenser.</div></details>
 <section id="tcPrepSummary" class="tc-prep-summary" aria-live="polite">
   <div class="tc-prep-summary-head"><div><small>RÉCAPITULATIF DE PRÉPARATION</small><strong>Votre TC en un coup d’œil</strong></div><div class="tc-prep-summary-total"><small>Score prévu</small><strong id="tcSummaryTotal">0</strong></div></div>
   <div id="tcSummaryPhases" class="tc-prep-summary-phases"></div>
@@ -895,7 +920,7 @@ function update(){
    el.classList.toggle('reached',remaining===0);
  });
 }
-function show(i,b){ document.querySelectorAll('.phase').forEach((x,j)=>x.classList.toggle('active',i===j)); document.querySelectorAll('.tools-page').forEach(x=>x.classList.remove('active')); document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active')); if(b)b.classList.add('active'); document.querySelectorAll('.tc-prep-phase').forEach((x,j)=>x.classList.toggle('is-active',i===j)); }
+function show(i,b){ document.body.classList.remove('tool-focus'); document.querySelectorAll('.phase').forEach((x,j)=>x.classList.toggle('active',i===j)); document.querySelectorAll('.tools-page').forEach(x=>x.classList.remove('active')); document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active')); if(b)b.classList.add('active'); document.querySelectorAll('.tc-prep-phase').forEach((x,j)=>x.classList.toggle('is-active',i===j)); }
 function goToSummaryPhase(num){ const i=phases.findIndex(p=>p.num===num); const b=document.querySelector('#tabs button[data-phase="'+num+'"]'); if(i<0||!b)return; show(i,b); const target=document.querySelectorAll('.phase')[i]; if(target)target.scrollIntoView({behavior:'smooth',block:'start'}); }
 
 const fragmentCosts=[10,10,15,15,25,30,35,40,40,45,50,55,70,75,80,85];
@@ -986,7 +1011,7 @@ function setupTrainingPreparation(){
   }));
 }
 
-function showTool(id,b){ document.querySelectorAll('.phase').forEach(x=>x.classList.remove('active')); document.querySelectorAll('.tools-page').forEach(x=>x.classList.remove('active')); const el=document.getElementById('tool-'+id); if(el) el.classList.add('active'); document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active')); b.classList.add('active'); if(id==='xp') calcXP(); if(id==='accel') calcAccel(); if(id==='ress') calcRess(); if(id==='vehicle') initVehicle(); if(id==='fragments') calcFragments(); }
+function showTool(id,b){ document.body.classList.add('tool-focus'); document.querySelectorAll('.phase').forEach(x=>x.classList.remove('active')); document.querySelectorAll('.tools-page').forEach(x=>x.classList.remove('active')); const el=document.getElementById('tool-'+id); if(el) el.classList.add('active'); document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active')); if(b)b.classList.add('active'); if(id==='xp') calcXP(); if(id==='accel') calcAccel(); if(id==='ress') calcRess(); if(id==='vehicle') initVehicle(); if(id==='fragments') calcFragments(); }
 function backToCalc(){ const b=document.querySelector('nav button'); if(b) show(0,b); }
 function compactGroupsForPhase(p){
   const groups=[];
@@ -1523,7 +1548,7 @@ function renderHome(){
   const box=document.getElementById('tc-home-current');if(!box)return;
   const es=events(12),e=es[0];if(!e)return;
   const today=new Date();today.setHours(0,0,0,0);const end=add(e.date,7),daysLeft=Math.max(0,dd(end,today)),eventLabels=labels(e);
-  box.innerHTML='<div class="tc-home-main"><div class="tc-home-icon">'+ICONS[e.type]+'</div><div><div class="tc-home-label">'+(e.current?'Top Commandant en cours':'Prochain Top Commandant')+'</div><div class="tc-home-title">'+e.type+' — '+fmt(e.date)+'</div><div class="tc-home-sub">'+(e.current?'Fin : '+fmt(end)+' · '+daysLeft+' jour'+(daysLeft>1?'s':'')+' restant'+(daysLeft>1?'s':'')+(eventLabels!=='—'?' · '+eventLabels:''):(eventLabels==='—'?'':eventLabels))+'</div></div></div><button type="button" class="tc-home-btn" onclick="openTCCalendar()">📅 Calendrier TC</button>';
+  box.innerHTML='<div class="tc-home-main"><div class="tc-home-icon">'+ICONS[e.type]+'</div><div><div class="tc-home-label">'+(e.current?'Top Commandant en cours':'Prochain Top Commandant')+'</div><div class="tc-home-title">'+e.type+' — '+fmt(e.date)+'</div><div class="tc-home-sub">'+(e.current?'Fin : '+fmt(end)+' · '+daysLeft+' jour'+(daysLeft>1?'s':'')+' restant'+(daysLeft>1?'s':'')+(eventLabels!=='—'?' · '+eventLabels:''):(eventLabels==='—'?'':eventLabels))+'</div></div></div>';
 }
 window.tcCalendarRender=render;window.tcCalendarRenderHome=renderHome;
 document.addEventListener('DOMContentLoaded',function(){render();renderHome()});
