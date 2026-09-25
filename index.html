@@ -643,20 +643,329 @@ body.tool-focus .tools-page.active{margin-top:0}
 .lang-switch button.active{border-color:#d5a844;color:#f6d982;background:linear-gradient(180deg,#332817,#1b160d);box-shadow:inset 0 -2px 0 #d5a844}
 @media(max-width:720px){.lang-switch button{min-width:38px;padding:5px 7px}}
 </style>
+
+<style id="ux-header-nav-test-v8">
+/* V8 TEST UX — uniquement barre supérieure + navigation. Aucun calcul modifié. */
+.top-utility-bar{
+  max-width:1500px;
+  margin:0 auto;
+  padding:7px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  background:rgba(8,10,13,.86);
+  border-bottom:1px solid rgba(201,154,67,.16);
+}
+.top-utility-bar .save-controls,
+.top-utility-bar .text-size-controls{
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center;
+  gap:6px;
+}
+.top-utility-bar .save-controls{justify-content:flex-start;flex:1 1 auto}
+.top-utility-bar .text-size-controls{justify-content:flex-end;flex:0 0 auto;flex-wrap:nowrap}
+.top-utility-bar #saveCalcBtn,
+.top-utility-bar #loadCalcBtn{
+  border-color:rgba(201,162,74,.68);
+  background:linear-gradient(180deg,rgba(47,40,25,.96),rgba(27,25,22,.96));
+  color:#f2d58e;
+  font-weight:800;
+}
+.top-utility-bar #clearCalcBtn,
+.top-utility-bar #resetCalcBtn{
+  border-color:rgba(160,155,145,.25);
+  background:rgba(22,24,28,.82);
+  color:#aaa9a5;
+  opacity:.84;
+}
+.top-utility-bar #clearCalcBtn:hover,
+.top-utility-bar #resetCalcBtn:hover{opacity:1;color:#ddd4bf;border-color:rgba(201,162,74,.38)}
+.top-utility-bar .save-status{margin-left:2px;white-space:nowrap}
+.top-utility-bar .text-size-label{white-space:nowrap}
+.top-utility-bar .lang-switch{box-shadow:none}
+
+/* Deux lignes permanentes : phases d'abord, outils ensuite. */
+#tabs{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+  gap:6px!important;
+  padding:8px 18px 10px!important;
+  overflow:visible!important;
+}
+#tabs .phase-nav-group{
+  width:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  flex-wrap:wrap!important;
+}
+#tabs .tools-nav-group{
+  width:100%!important;
+  flex:0 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding:5px 9px!important;
+  border:1px solid rgba(201,154,67,.16)!important;
+  border-radius:8px!important;
+  background:rgba(201,154,67,.025)!important;
+}
+#tabs .tools-label{
+  max-width:none!important;
+  margin:0 4px 0 0!important;
+  font-size:9px!important;
+  letter-spacing:.045em;
+  white-space:nowrap;
+  color:#a99565!important;
+}
+#tabs .tools-buttons{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  flex-wrap:wrap!important;
+}
+#tabs .tool-tab{
+  padding:6px 10px!important;
+  font-size:11px!important;
+  opacity:.88;
+}
+#tabs .tool-tab:hover,#tabs .tool-tab.active{opacity:1}
+
+@media(max-width:900px){
+  .top-utility-bar{align-items:stretch;flex-direction:column;gap:7px;padding:7px 10px}
+  .top-utility-bar .save-controls,.top-utility-bar .text-size-controls{justify-content:center!important;flex-wrap:wrap!important}
+}
+@media(max-width:720px){
+  #tabs{padding:7px 8px 9px!important}
+  #tabs .tools-nav-group{flex-direction:column!important;gap:5px!important}
+  #tabs .tools-buttons{width:100%!important}
+  #tabs .tool-tab{flex:1 1 125px!important}
+}
+</style>
+
+<style id="ux-v9-vehicle-message-hierarchy">
+/* === UX V9 — hiérarchie visuelle des messages véhicule ===
+   Visuel uniquement : aucun calcul ni comportement JS modifié. */
+
+/* Le conteneur de résultat reste sobre par défaut. */
+.vehicle-opt-result{
+  border:1px solid rgba(255,255,255,.07);
+  background:linear-gradient(145deg,rgba(255,255,255,.028),rgba(255,255,255,.012));
+  box-shadow:inset 3px 0 0 rgba(201,154,67,.20);
+}
+
+/* Résultat normal / objectif réalisable : information calme, sans couleur d'alerte. */
+.vehicle-opt-result:has(.veh-result-good):not(:has(.veh-alert-card)){
+  border-color:rgba(201,154,67,.22);
+  background:linear-gradient(145deg,rgba(201,154,67,.045),rgba(255,255,255,.012));
+  box-shadow:inset 3px 0 0 rgba(201,154,67,.48);
+}
+.vehicle-opt-result:has(.veh-result-good):not(:has(.veh-alert-card)) .veh-result-good{
+  color:#eee6d6;
+}
+.vehicle-opt-result:has(.veh-result-good):not(:has(.veh-alert-card)) .veh-result-good strong{
+  color:#f0d28f;
+}
+
+/* Quand une vraie carte d'état est affichée, on enlève la "boîte dans la boîte". */
+.vehicle-opt-result:has(.veh-alert-card){
+  padding:0;
+  border-color:transparent;
+  background:transparent;
+  box-shadow:none;
+}
+.vehicle-opt-result:has(.veh-alert-card) .veh-alert-card{margin-top:0;}
+
+/* OPPORTUNITÉ : palier permettant d'atteindre 100 M — doré assumé. */
+.veh-alert-card-cap{
+  position:relative;
+  overflow:hidden;
+  border-color:rgba(226,181,79,.95);
+  background:linear-gradient(135deg,rgba(201,154,67,.20),rgba(201,154,67,.07) 58%,rgba(255,255,255,.018));
+  box-shadow:0 0 0 1px rgba(244,205,113,.09) inset,0 8px 24px rgba(0,0,0,.22),0 0 22px rgba(201,154,67,.08);
+}
+.veh-alert-card-cap::before{
+  content:"";
+  position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(#f1d18a,#b88632);
+}
+.veh-alert-card-cap .veh-alert-card-icon{
+  border-color:rgba(241,209,138,.86);
+  background:rgba(201,154,67,.13);
+  color:#ffe4a3;
+  box-shadow:0 0 14px rgba(201,154,67,.12);
+}
+.veh-alert-card-cap .veh-alert-card-title{color:#ffe096;}
+.veh-alert-card-cap .veh-alert-card-res{border-top-color:rgba(226,181,79,.38);}
+#vehCapApply{
+  border-color:rgba(226,181,79,.88)!important;
+  background:linear-gradient(145deg,rgba(201,154,67,.20),rgba(201,154,67,.09))!important;
+  color:#ffe3a0!important;
+  box-shadow:inset 0 0 0 1px rgba(255,224,150,.08),0 4px 14px rgba(0,0,0,.16)!important;
+}
+#vehCapApply:not(:disabled):hover{
+  border-color:#e7bd66!important;
+  background:linear-gradient(145deg,rgba(201,154,67,.27),rgba(201,154,67,.12))!important;
+}
+
+/* BLOCAGE : le rouge est réservé aux erreurs / actions impossibles. */
+.veh-alert-card-bad,
+.vehicle-report-warning{
+  position:relative;
+  overflow:hidden;
+  border-color:rgba(210,75,66,.92)!important;
+  background:linear-gradient(135deg,rgba(145,38,31,.22),rgba(84,24,22,.13))!important;
+  box-shadow:0 0 0 1px rgba(255,120,110,.055) inset,0 7px 22px rgba(0,0,0,.20)!important;
+}
+.veh-alert-card-bad::before,
+.vehicle-report-warning::before{
+  content:"";
+  position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(#e66d62,#97332c);
+}
+.veh-alert-card-bad .veh-alert-card-icon{
+  background:rgba(201,82,72,.10);
+}
+.veh-alert-card-bad .veh-alert-card-title,
+.vehicle-report-warning strong{color:#ffaaa2!important;}
+
+/* Avertissement de dépassement manuel des 100 M : important, mais pas une erreur. */
+.vehicle-report-overcap{
+  position:relative;
+  overflow:hidden;
+  border-color:rgba(201,154,67,.62);
+  background:linear-gradient(135deg,rgba(201,154,67,.105),rgba(255,255,255,.018));
+  box-shadow:0 5px 18px rgba(0,0,0,.16);
+}
+.vehicle-report-overcap::before{
+  content:"";
+  position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:rgba(201,154,67,.72);
+}
+
+/* Le bouton de report bloqué reste nettement secondaire et indisponible. */
+.vehicle-report-btn:disabled{
+  border-color:rgba(210,75,66,.34)!important;
+  background:rgba(90,35,32,.12)!important;
+  color:#bd8e89!important;
+  opacity:.72!important;
+  filter:none!important;
+}
+</style>
+
+
+<style id="vehicle-progressive-steps-v10">
+/* V10 UX — progression visuelle des 4 étapes véhicule (aucun calcul modifié) */
+#tool-vehicle .veh-step{
+  position:relative;
+  transition:border-color .2s ease,background .2s ease,opacity .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+#tool-vehicle .veh-step.veh-progress-active{
+  opacity:1;
+  border-color:rgba(201,162,74,.62)!important;
+  background:rgba(201,162,74,.085)!important;
+  box-shadow:0 0 0 1px rgba(201,162,74,.10) inset,0 7px 18px rgba(0,0,0,.16);
+  transform:translateY(-1px);
+}
+#tool-vehicle .veh-step.veh-progress-active .veh-stage-icon,
+#tool-vehicle .veh-step.veh-progress-active strong{
+  color:#ead08c!important;
+}
+#tool-vehicle .veh-step.veh-progress-complete{
+  opacity:.88;
+  border-color:rgba(201,162,74,.30)!important;
+  background:rgba(201,162,74,.028)!important;
+}
+#tool-vehicle .veh-step.veh-progress-complete::after{
+  content:"✓";
+  position:absolute;
+  top:5px;
+  right:7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:16px;
+  height:16px;
+  border:1px solid rgba(201,162,74,.34);
+  border-radius:50%;
+  background:rgba(201,162,74,.10);
+  color:#e0c785;
+  font-size:10px;
+  font-weight:900;
+  line-height:1;
+}
+#tool-vehicle .veh-step.veh-progress-future{
+  opacity:.52;
+  border-color:rgba(255,255,255,.07)!important;
+  background:rgba(255,255,255,.010)!important;
+  box-shadow:none;
+}
+#tool-vehicle .vehicle-block[class*="veh-stage-"]{
+  transition:border-color .22s ease,background .22s ease,opacity .22s ease,box-shadow .22s ease;
+}
+#tool-vehicle .vehicle-block.veh-progress-active{
+  opacity:1;
+  border-color:rgba(201,162,74,.52)!important;
+  background:linear-gradient(90deg,rgba(201,162,74,.065),rgba(10,12,16,.34) 24%)!important;
+  box-shadow:0 0 0 1px rgba(201,162,74,.055) inset,0 9px 22px rgba(0,0,0,.12)!important;
+}
+#tool-vehicle .vehicle-block.veh-progress-active:before{
+  background:rgba(201,162,74,.86)!important;
+  width:3px!important;
+}
+#tool-vehicle .vehicle-block.veh-progress-complete{
+  opacity:.91;
+  border-color:rgba(201,162,74,.24)!important;
+  background:rgba(10,12,16,.30)!important;
+  box-shadow:none!important;
+}
+#tool-vehicle .vehicle-block.veh-progress-complete:before{
+  background:rgba(201,162,74,.34)!important;
+  width:2px!important;
+}
+#tool-vehicle .vehicle-block.veh-progress-future{
+  opacity:.57;
+  border-color:rgba(255,255,255,.075)!important;
+  background:rgba(10,12,16,.22)!important;
+  box-shadow:none!important;
+}
+#tool-vehicle .vehicle-block.veh-progress-future:before{
+  background:rgba(255,255,255,.10)!important;
+  width:2px!important;
+}
+#tool-vehicle .vehicle-block.veh-progress-future .veh-stage-title>.veh-stage-icon{
+  border-color:rgba(255,255,255,.12)!important;
+}
+@media(max-width:700px){
+  #tool-vehicle .veh-step.veh-progress-complete::after{top:4px;right:5px;width:14px;height:14px;font-size:9px}
+}
+</style>
+
 </head>
 <body>
-<div class="save-controls" id="saveControls">
-<button type="button" id="saveCalcBtn">💾 Sauvegarder</button>
-<button type="button" id="loadCalcBtn">📂 Charger</button>
-<button type="button" id="clearCalcBtn">🗑️ Supprimer la sauvegarde</button>
-<button type="button" id="resetCalcBtn" class="reset-secondary" onclick="resetAll()">↻ Réinitialiser le simulateur</button>
-<span class="save-status" id="saveStatus"></span></div>
+<div class="top-utility-bar" id="topUtilityBar">
+  <div class="save-controls" id="saveControls">
+    <button type="button" id="saveCalcBtn">💾 Sauvegarder</button>
+    <button type="button" id="loadCalcBtn">📂 Charger</button>
+    <button type="button" id="clearCalcBtn">🗑️ Supprimer la sauvegarde</button>
+    <button type="button" id="resetCalcBtn" class="reset-secondary" onclick="resetAll()">↻ Réinitialiser le simulateur</button>
+    <span class="save-status" id="saveStatus"></span>
+  </div>
 
-<div class="text-size-controls" id="textSizeControls" aria-label="Taille du texte">
-  <div class="lang-switch" id="langSwitch" aria-label="Langue / Language"><button type="button" data-lang="fr" class="active" title="Français">FR</button><button type="button" data-lang="en" title="English">EN</button></div>
-  <span class="text-size-label">Taille du texte</span>
-  <button type="button" id="textSizeDown" aria-label="Réduire la taille du texte" title="Réduire la taille du texte">A−</button>
-  <button type="button" id="textSizeUp" aria-label="Augmenter la taille du texte" title="Augmenter la taille du texte">A+</button>
+  <div class="text-size-controls" id="textSizeControls" aria-label="Taille du texte">
+    <div class="lang-switch" id="langSwitch" aria-label="Langue / Language"><button type="button" data-lang="fr" class="active" title="Français">FR</button><button type="button" data-lang="en" title="English">EN</button></div>
+    <span class="text-size-label">Taille du texte</span>
+    <button type="button" id="textSizeDown" aria-label="Réduire la taille du texte" title="Réduire la taille du texte">A−</button>
+    <button type="button" id="textSizeUp" aria-label="Augmenter la taille du texte" title="Augmenter la taille du texte">A+</button>
+  </div>
 </div>
 
 <header><div class="hero"><div class="top"><div class="brand">⚔ TOP COMMANDANT<small>SIMULATEUR DE POINTS</small></div>
@@ -1885,5 +2194,76 @@ const mo=new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData
 window.tcSetLanguage=setLang;window.tcGetLanguage=()=>lang;window.tcTranslateText=enText;apply();setTimeout(apply,0);setTimeout(apply,120);
 })();
 </script>
+
+<script id="vehicle-progressive-steps-v10-script">
+(function(){
+  const STEP_COUNT=4;
+  const resourceIds=['vehAvailPlans1','vehAvailPlans2','vehAvailPlans3','vehAvailMetal','vehAvailAcier'];
+
+  function vehicleProgressState(){
+    const selected=[...document.querySelectorAll('#vehItems input[id^="vehCheck"]:checked')].length;
+    const resourcesFilled=resourceIds.every(id=>{
+      const el=document.getElementById(id);
+      return !!el && String(el.value).trim()!=='';
+    });
+    const powerEl=document.getElementById('vehPower');
+    const numericPower=powerEl ? Number(String(powerEl.textContent||'').replace(/[^0-9.-]/g,''))||0 : 0;
+
+    const done1=selected>0;
+    const done2=done1 && resourcesFilled;
+    const done3=done2 && numericPower>0;
+    const active=!done1 ? 0 : !done2 ? 1 : !done3 ? 2 : 3;
+    return {active,done:[done1,done2,done3,false]};
+  }
+
+  function updateVehicleStageProgress(){
+    const tool=document.getElementById('tool-vehicle');
+    if(!tool) return;
+    const pills=[...tool.querySelectorAll('.veh-steps .veh-step')].slice(0,STEP_COUNT);
+    const blocks=[1,2,3,4].map(n=>tool.querySelector('.vehicle-block.veh-stage-'+n));
+    if(pills.length<STEP_COUNT) return;
+    const state=vehicleProgressState();
+
+    pills.forEach((el,i)=>{
+      el.classList.remove('veh-progress-active','veh-progress-complete','veh-progress-future');
+      if(i===state.active){
+        el.classList.add('veh-progress-active');
+        el.setAttribute('aria-current','step');
+      }else{
+        el.removeAttribute('aria-current');
+        el.classList.add(i<state.active && state.done[i] ? 'veh-progress-complete' : 'veh-progress-future');
+      }
+    });
+
+    blocks.forEach((el,i)=>{
+      if(!el) return;
+      el.classList.remove('veh-progress-active','veh-progress-complete','veh-progress-future');
+      if(i===state.active) el.classList.add('veh-progress-active');
+      else el.classList.add(i<state.active && state.done[i] ? 'veh-progress-complete' : 'veh-progress-future');
+    });
+  }
+
+  function scheduleVehicleProgressUpdate(){
+    requestAnimationFrame(()=>requestAnimationFrame(updateVehicleStageProgress));
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    scheduleVehicleProgressUpdate();
+    const tool=document.getElementById('tool-vehicle');
+    if(!tool) return;
+    tool.addEventListener('input',scheduleVehicleProgressUpdate,true);
+    tool.addEventListener('change',scheduleVehicleProgressUpdate,true);
+    tool.addEventListener('click',scheduleVehicleProgressUpdate,true);
+    const result=document.getElementById('vehOptResult');
+    const power=document.getElementById('vehPower');
+    const observer=new MutationObserver(scheduleVehicleProgressUpdate);
+    if(result) observer.observe(result,{subtree:true,childList:true,characterData:true});
+    if(power) observer.observe(power,{subtree:true,childList:true,characterData:true});
+  });
+
+  window.updateVehicleStageProgress=updateVehicleStageProgress;
+})();
+</script>
+
 </body></html>
 <script>initFragments();</script>
