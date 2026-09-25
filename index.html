@@ -808,7 +808,7 @@ function updatePrepSummary(total){
  if(calc(18)>=100000000) alerts.push('Phase 1 : plafond accélérateurs de 100 M atteint.');
  if(calc(80)>=100000000) alerts.push('Phase 4 : plafond véhicule de 100 M atteint.');
  if(calc(208)>=100000000) alerts.push('Phase 6 : plafond accélérateurs de 100 M atteint.');
- if(alertBox) alertBox.innerHTML=alerts.length?'<strong>Points d’attention :</strong> '+alerts.join(' · '):'<span>✓ Aucun plafond ou avertissement actif dans les données saisies.</span>';
+ if(alertBox){ alertBox.innerHTML=alerts.length?'<strong>Points d’attention :</strong> '+alerts.join(' · '):''; alertBox.style.display=alerts.length?'':'none'; }
 }
 
 function update(){
