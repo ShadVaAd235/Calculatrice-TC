@@ -949,22 +949,441 @@ body.tool-focus .tools-page.active{margin-top:0}
 }
 </style>
 
+
+<style id="mobile-responsive-v11">
+/* V11 — optimisation mobile uniquement. Desktop inchangé. */
+.tc-summary-mobile-toggle{display:none}
+@media (max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  body{background-attachment:fixed}
+
+  /* Barre utilitaire : actions essentielles puis secondaires, langue/taille sur une seule ligne. */
+  .top-utility-bar{
+    padding:7px 10px!important;
+    gap:6px!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+  }
+  .top-utility-bar .save-controls{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:5px!important;
+    width:100%!important;
+  }
+  .top-utility-bar .save-controls button{
+    min-width:0!important;
+    width:100%!important;
+    padding:7px 6px!important;
+    font-size:11px!important;
+    line-height:1.15!important;
+    white-space:normal!important;
+  }
+  .top-utility-bar #saveCalcBtn,.top-utility-bar #loadCalcBtn{min-height:34px!important}
+  .top-utility-bar #clearCalcBtn,.top-utility-bar #resetCalcBtn{
+    min-height:28px!important;
+    padding:5px 5px!important;
+    font-size:10px!important;
+  }
+  .top-utility-bar .save-status{grid-column:1/-1;text-align:center;font-size:9px!important;min-height:0}
+  .top-utility-bar .text-size-controls{
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    flex-wrap:nowrap!important;
+    width:100%!important;
+    gap:5px!important;
+  }
+  .top-utility-bar .lang-switch{display:flex!important;flex:0 0 auto!important}
+  .top-utility-bar .lang-switch button{min-width:38px!important;height:29px!important;padding:4px 7px!important;font-size:12px!important}
+  .top-utility-bar .text-size-label{font-size:9px!important;margin:0 2px!important;white-space:nowrap!important}
+  .top-utility-bar #textSizeDown,.top-utility-bar #textSizeUp{min-width:36px!important;height:29px!important;padding:3px 7px!important;font-size:13px!important}
+
+  /* Bannière mobile courte : marque + score, illustration seulement décorative. */
+  .hero{
+    height:94px!important;
+    aspect-ratio:auto!important;
+    background-size:cover!important;
+    background-position:center center!important;
+  }
+  .hero .top{
+    height:100%!important;
+    padding:9px 12px!important;
+    align-items:center!important;
+    gap:10px!important;
+  }
+  .brand{font-size:17px!important;line-height:1.02!important;letter-spacing:1.5px!important;max-width:54%!important}
+  .brand small{font-size:8px!important;letter-spacing:1.4px!important;margin-top:4px!important}
+  .score{
+    min-width:120px!important;
+    padding:6px 10px 7px!important;
+    border-radius:8px!important;
+    margin-left:auto!important;
+  }
+  .score small{font-size:8px!important;letter-spacing:1.8px!important}
+  .score strong{font-size:31px!important;line-height:1!important}
+
+  /* Navigation : 3 x 2 pour les phases, outils 2 + 2 + calendrier pleine largeur. */
+  #tabs{padding:6px 8px 8px!important;gap:6px!important}
+  #tabs .phase-nav-group{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    width:100%!important;
+    gap:5px!important;
+  }
+  #tabs .phase-nav-group>button{
+    width:100%!important;
+    min-width:0!important;
+    padding:8px 4px!important;
+    font-size:10px!important;
+    min-height:36px!important;
+  }
+  #tabs .tools-nav-group{padding:5px!important;gap:4px!important}
+  #tabs .tools-label{font-size:8px!important;line-height:1!important;margin:0!important}
+  #tabs .tools-buttons{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    width:100%!important;
+    gap:5px!important;
+  }
+  #tabs .tool-tab{
+    width:100%!important;
+    min-width:0!important;
+    min-height:34px!important;
+    padding:7px 5px!important;
+    font-size:10px!important;
+  }
+  #tabs .tool-tab:nth-child(5){grid-column:1/-1!important}
+  .prep-banner{padding:6px 10px!important;font-size:9.5px!important;line-height:1.35!important}
+
+  /* Contenu : moins de marge avant les informations utiles. */
+  main{padding:14px 12px 42px!important}
+  .tc-home-card{
+    margin-bottom:8px!important;
+    padding:10px 11px!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    gap:8px!important;
+  }
+  .tc-home-main{gap:8px!important;min-width:0!important}
+  .tc-home-icon{font-size:23px!important}
+  .tc-home-label{font-size:8.5px!important}
+  .tc-home-title{font-size:17px!important;line-height:1.1!important}
+  .tc-home-sub{font-size:9.5px!important;line-height:1.25!important}
+  .tc-home-btn{width:auto!important;padding:6px 8px!important;font-size:9.5px!important;flex:0 0 auto!important}
+  #calculator-disclaimer .disclaimer-title{padding:8px 10px!important;font-size:10px!important}
+  #calculator-disclaimer .disclaimer-content{padding:0 10px 10px!important;font-size:10px!important;line-height:1.4!important}
+
+  /* Résumé : score visible, détail des phases replié par défaut sur téléphone. */
+  .tc-prep-summary{margin:9px 0 14px!important;padding:11px 12px!important}
+  .tc-prep-summary-head{display:grid!important;grid-template-columns:1fr auto auto!important;align-items:center!important;gap:8px!important;margin-bottom:0!important}
+  .tc-prep-summary-head>div:first-child{min-width:0}
+  .tc-prep-summary-head small{font-size:8.5px!important}
+  .tc-prep-summary-head strong{font-size:15px!important;line-height:1.15!important}
+  .tc-prep-summary-total{text-align:right!important;margin:0!important}
+  .tc-prep-summary-total small{font-size:8.5px!important}
+  .tc-prep-summary-total strong{font-size:17px!important}
+  .tc-summary-mobile-toggle{
+    display:inline-flex!important;
+    width:30px!important;height:30px!important;
+    align-items:center!important;justify-content:center!important;
+    border:1px solid rgba(201,162,74,.36)!important;
+    border-radius:7px!important;
+    background:rgba(201,162,74,.06)!important;
+    color:#e6c779!important;
+    font-size:16px!important;
+    cursor:pointer!important;
+    transition:transform .18s ease,background .18s ease!important;
+  }
+  .tc-prep-summary:not(.mobile-collapsed) .tc-summary-mobile-toggle{transform:rotate(180deg)}
+  .tc-prep-summary.mobile-collapsed .tc-prep-summary-phases,
+  .tc-prep-summary.mobile-collapsed .tc-prep-summary-alerts{display:none!important}
+  .tc-prep-summary:not(.mobile-collapsed) .tc-prep-summary-phases{margin-top:10px!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+  .tc-prep-summary:not(.mobile-collapsed) .tc-prep-phase{min-height:42px!important;padding:6px 4px!important}
+  .tc-prep-summary:not(.mobile-collapsed) .tc-prep-phase span{font-size:9px!important}
+  .tc-prep-summary:not(.mobile-collapsed) .tc-prep-phase strong{font-size:11px!important}
+  .tc-prep-summary-alerts{font-size:10px!important;margin-top:8px!important;padding-top:8px!important}
+
+  /* Phase : conserver de grands champs tactiles, réduire seulement les marges. */
+  .phase-head{margin-bottom:11px!important;padding-bottom:8px!important}
+  .phase-head h2{font-size:23px!important}
+  .ptotal{font-size:16px!important;padding:6px 9px!important}
+  .grid{grid-template-columns:1fr!important;gap:10px!important}
+  .card{padding:13px!important}
+  .card:hover{transform:none!important}
+}
+@media (max-width:390px){
+  .brand{font-size:15px!important;letter-spacing:1px!important}
+  .score{min-width:108px!important;padding:6px 8px!important}
+  .score strong{font-size:28px!important}
+  #tabs .phase-nav-group>button{font-size:9.5px!important}
+  .tc-home-btn{display:none!important}
+}
+</style>
+
+
+<style id="utility-icon-controls-v12">
+/* V12 — commandes sauvegarde compactes par pictogrammes uniquement. */
+.utility-label-sr{
+  position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
+}
+.top-utility-bar .save-controls{flex:0 0 auto!important}
+.top-utility-bar .save-controls .utility-icon-btn{
+  width:42px!important;height:38px!important;min-width:42px!important;min-height:38px!important;
+  padding:0!important;display:inline-grid!important;place-items:center!important;position:relative!important;
+  font-size:19px!important;line-height:1!important;border-radius:9px!important;white-space:nowrap!important;
+}
+.top-utility-bar #clearCalcBtn.utility-icon-btn,.top-utility-bar #resetCalcBtn.utility-icon-btn{font-size:18px!important}
+@media (max-width:700px){
+  .top-utility-bar .save-controls{
+    display:flex!important;justify-content:center!important;align-items:center!important;gap:8px!important;width:100%!important;
+  }
+  .top-utility-bar .save-controls .utility-icon-btn{
+    width:46px!important;height:42px!important;min-width:46px!important;min-height:42px!important;
+    padding:0!important;font-size:20px!important;flex:0 0 46px!important;
+  }
+  .top-utility-bar #clearCalcBtn.utility-icon-btn,.top-utility-bar #resetCalcBtn.utility-icon-btn{font-size:19px!important}
+  .top-utility-bar .save-status{width:100%!important;flex-basis:100%!important;text-align:center!important}
+}
+</style>
+
+
+<style id="utility-controls-v13">
+/* V13 — options secondaires regroupées et alignées, sans libellé "Taille du texte". */
+.top-utility-bar .text-size-label{display:none!important}
+.top-utility-bar .utility-icon-btn > span[aria-hidden="true"]{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  width:1.25em;height:1.25em;line-height:1!important;
+}
+@media (max-width:700px){
+  .top-utility-bar{
+    padding:6px 8px!important;gap:7px!important;
+    flex-direction:row!important;flex-wrap:wrap!important;
+    justify-content:center!important;align-items:center!important;
+  }
+  .top-utility-bar .save-controls{
+    display:flex!important;justify-content:center!important;align-items:center!important;
+    gap:5px!important;width:auto!important;flex:0 0 auto!important;
+  }
+  .top-utility-bar .save-controls .utility-icon-btn{
+    width:38px!important;height:36px!important;min-width:38px!important;min-height:36px!important;
+    flex:0 0 38px!important;padding:0!important;border-radius:8px!important;
+    font-size:18px!important;
+  }
+  .top-utility-bar #clearCalcBtn.utility-icon-btn{font-size:17px!important}
+  .top-utility-bar #resetCalcBtn.utility-icon-btn{font-size:19px!important}
+  .top-utility-bar .text-size-controls{
+    display:flex!important;justify-content:center!important;align-items:center!important;
+    gap:5px!important;width:auto!important;flex:0 0 auto!important;
+  }
+  .top-utility-bar .lang-switch{display:flex!important;gap:3px!important;flex:0 0 auto!important}
+  .top-utility-bar .lang-switch button,
+  .top-utility-bar #textSizeDown,.top-utility-bar #textSizeUp{
+    height:36px!important;min-height:36px!important;border-radius:8px!important;
+    padding:0 8px!important;font-size:12px!important;line-height:1!important;
+  }
+  .top-utility-bar .lang-switch button{min-width:34px!important}
+  .top-utility-bar #textSizeDown,.top-utility-bar #textSizeUp{min-width:36px!important}
+  .top-utility-bar .save-status{
+    order:20!important;width:100%!important;flex:0 0 100%!important;
+    min-height:0!important;margin:0!important;text-align:center!important;font-size:9px!important;
+  }
+}
+@media (max-width:380px){
+  .top-utility-bar{gap:5px!important;padding-left:5px!important;padding-right:5px!important}
+  .top-utility-bar .save-controls{gap:4px!important}
+  .top-utility-bar .save-controls .utility-icon-btn{width:36px!important;min-width:36px!important;flex-basis:36px!important}
+  .top-utility-bar .text-size-controls{gap:4px!important}
+  .top-utility-bar .lang-switch button{min-width:32px!important;padding:0 6px!important}
+  .top-utility-bar #textSizeDown,.top-utility-bar #textSizeUp{min-width:34px!important;padding:0 6px!important}
+}
+</style>
+
+<style id="utility-controls-v14">
+/* V14 — trois actions seulement ; séparation nette avec les préférences d’affichage. */
+@media (max-width:700px){
+  .top-utility-bar .save-controls{margin-right:15px!important;}
+  .top-utility-bar .text-size-controls{margin-left:0!important;}
+  .top-utility-bar #resetCalcBtn.utility-icon-btn{margin-left:5px!important;}
+}
+@media (min-width:701px){
+  .top-utility-bar .save-controls{margin-right:18px!important;}
+}
+@media (max-width:380px){
+  .top-utility-bar .save-controls{margin-right:10px!important;}
+  .top-utility-bar #resetCalcBtn.utility-icon-btn{margin-left:3px!important;}
+}
+</style>
+
+<style id="utility-controls-v15">
+/* V15 — trois groupes distincts : langue, taille du texte, actions. */
+.top-utility-bar{justify-content:center!important;align-items:center!important;}
+.top-utility-bar .utility-group{
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  padding:4px;border:1px solid rgba(201,154,67,.28);border-radius:11px;
+  background:rgba(13,17,23,.72);box-shadow:inset 0 0 0 1px rgba(255,255,255,.015);
+}
+.top-utility-bar .utility-group-language{order:1;}
+.top-utility-bar .utility-group-text{order:2;}
+.top-utility-bar .utility-group-actions{order:3;}
+.top-utility-bar .utility-group-text .text-size-label{display:none!important;}
+.top-utility-bar .utility-group-language .lang-switch{padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;}
+.top-utility-bar .utility-group-actions.save-controls{margin-right:0!important;}
+.top-utility-bar .utility-group-actions #resetCalcBtn.utility-icon-btn{margin-left:0!important;}
+@media (max-width:700px){
+  .top-utility-bar{gap:10px!important;padding:7px 8px!important;flex-wrap:nowrap!important;}
+  .top-utility-bar .utility-group{height:44px!important;padding:3px!important;flex:0 0 auto!important;}
+  .top-utility-bar .utility-group-language{gap:3px!important;}
+  .top-utility-bar .utility-group-text{gap:3px!important;}
+  .top-utility-bar .utility-group-actions{gap:3px!important;width:auto!important;}
+  .top-utility-bar .utility-group-language .lang-switch button,
+  .top-utility-bar .utility-group-text #textSizeDown,
+  .top-utility-bar .utility-group-text #textSizeUp,
+  .top-utility-bar .utility-group-actions .utility-icon-btn{
+    width:40px!important;min-width:40px!important;height:36px!important;min-height:36px!important;
+    padding:0!important;border-radius:8px!important;flex:0 0 40px!important;
+  }
+  .top-utility-bar .utility-group-language .lang-switch button,
+  .top-utility-bar .utility-group-text #textSizeDown,
+  .top-utility-bar .utility-group-text #textSizeUp{font-size:13px!important;}
+  .top-utility-bar .utility-group-actions .utility-icon-btn{font-size:18px!important;}
+  .top-utility-bar .save-status{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;}
+}
+@media (max-width:420px){
+  .top-utility-bar{gap:6px!important;padding-left:5px!important;padding-right:5px!important;}
+  .top-utility-bar .utility-group{height:42px!important;padding:2px!important;}
+  .top-utility-bar .utility-group-language .lang-switch button,
+  .top-utility-bar .utility-group-text #textSizeDown,
+  .top-utility-bar .utility-group-text #textSizeUp,
+  .top-utility-bar .utility-group-actions .utility-icon-btn{
+    width:36px!important;min-width:36px!important;flex-basis:36px!important;height:34px!important;min-height:34px!important;
+  }
+}
+</style>
+
+<style id="utility-controls-v16">
+/* V16 — separation plus nette des 3 groupes + A-/A+ harmonises avec le theme sombre. */
+@media (max-width:700px){
+  .top-utility-bar{
+    column-gap:16px!important;
+    row-gap:8px!important;
+  }
+  .top-utility-bar .utility-group-text #textSizeDown,
+  .top-utility-bar .utility-group-text #textSizeUp{
+    -webkit-appearance:none!important;appearance:none!important;
+    background:#15171a!important;
+    color:#f1d18a!important;
+    border:1px solid #6e5426!important;
+    box-shadow:none!important;
+  }
+  .top-utility-bar .utility-group-text #textSizeDown:active,
+  .top-utility-bar .utility-group-text #textSizeUp:active{
+    background:linear-gradient(180deg,#332817,#1b160d)!important;
+    border-color:#d5a844!important;
+  }
+}
+@media (max-width:420px){
+  .top-utility-bar{column-gap:12px!important;row-gap:7px!important;}
+}
+@media (max-width:360px){
+  .top-utility-bar{column-gap:9px!important;}
+}
+</style>
+
+<style id="utility-controls-v17-harmonized">
+/* V17 — cohérence visuelle des 3 groupes, sans modifier les fonctions. */
+.top-utility-bar{
+  column-gap:18px!important;
+  row-gap:8px!important;
+}
+.top-utility-bar .utility-group{
+  gap:4px!important;
+}
+/* Taille du texte : commandes neutres au repos, comme le reste de l'UI. */
+.top-utility-bar .utility-group-text #textSizeDown,
+.top-utility-bar .utility-group-text #textSizeUp{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  background:#15171a!important;
+  color:#d7d1c5!important;
+  border:1px solid rgba(170,165,155,.32)!important;
+  box-shadow:none!important;
+}
+.top-utility-bar .utility-group-text #textSizeDown:hover,
+.top-utility-bar .utility-group-text #textSizeUp:hover,
+.top-utility-bar .utility-group-text #textSizeDown:focus-visible,
+.top-utility-bar .utility-group-text #textSizeUp:focus-visible,
+.top-utility-bar .utility-group-text #textSizeDown:active,
+.top-utility-bar .utility-group-text #textSizeUp:active{
+  color:#f2d58e!important;
+  border-color:rgba(213,168,68,.72)!important;
+  background:rgba(42,35,23,.96)!important;
+}
+/* Sauvegarder / Charger / Réinitialiser : jamais "sélectionnés" au repos. */
+.top-utility-bar .utility-group-actions #saveCalcBtn,
+.top-utility-bar .utility-group-actions #loadCalcBtn,
+.top-utility-bar .utility-group-actions #resetCalcBtn{
+  background:#15171a!important;
+  color:#d7d1c5!important;
+  border-color:rgba(170,165,155,.30)!important;
+  box-shadow:none!important;
+  opacity:1!important;
+}
+.top-utility-bar .utility-group-actions #saveCalcBtn:hover,
+.top-utility-bar .utility-group-actions #loadCalcBtn:hover,
+.top-utility-bar .utility-group-actions #resetCalcBtn:hover,
+.top-utility-bar .utility-group-actions #saveCalcBtn:focus-visible,
+.top-utility-bar .utility-group-actions #loadCalcBtn:focus-visible,
+.top-utility-bar .utility-group-actions #resetCalcBtn:focus-visible,
+.top-utility-bar .utility-group-actions #saveCalcBtn:active,
+.top-utility-bar .utility-group-actions #loadCalcBtn:active,
+.top-utility-bar .utility-group-actions #resetCalcBtn:active{
+  color:#f2d58e!important;
+  border-color:rgba(213,168,68,.72)!important;
+  background:rgba(42,35,23,.96)!important;
+}
+/* Seul FR/EN conserve un véritable état actif doré. */
+.top-utility-bar .utility-group-language .lang-switch button:not(.active){
+  background:#15171a!important;
+  color:#aaa!important;
+  border-color:#4b4438!important;
+  box-shadow:none!important;
+}
+.top-utility-bar .utility-group-language .lang-switch button.active{
+  border-color:#d5a844!important;
+  color:#f6d982!important;
+  background:linear-gradient(180deg,#332817,#1b160d)!important;
+  box-shadow:inset 0 -2px 0 #d5a844!important;
+}
+@media (max-width:700px){
+  .top-utility-bar{column-gap:14px!important;row-gap:7px!important;}
+}
+@media (max-width:420px){
+  .top-utility-bar{column-gap:12px!important;}
+}
+@media (max-width:360px){
+  .top-utility-bar{column-gap:9px!important;}
+}
+</style>
+
 </head>
 <body>
 <div class="top-utility-bar" id="topUtilityBar">
-  <div class="save-controls" id="saveControls">
-    <button type="button" id="saveCalcBtn">💾 Sauvegarder</button>
-    <button type="button" id="loadCalcBtn">📂 Charger</button>
-    <button type="button" id="clearCalcBtn">🗑️ Supprimer la sauvegarde</button>
-    <button type="button" id="resetCalcBtn" class="reset-secondary" onclick="resetAll()">↻ Réinitialiser le simulateur</button>
-    <span class="save-status" id="saveStatus"></span>
+  <div class="utility-group utility-group-language" aria-label="Langue / Language">
+    <div class="lang-switch" id="langSwitch"><button type="button" data-lang="fr" class="active" title="Français">FR</button><button type="button" data-lang="en" title="English">EN</button></div>
   </div>
 
-  <div class="text-size-controls" id="textSizeControls" aria-label="Taille du texte">
-    <div class="lang-switch" id="langSwitch" aria-label="Langue / Language"><button type="button" data-lang="fr" class="active" title="Français">FR</button><button type="button" data-lang="en" title="English">EN</button></div>
+  <div class="utility-group utility-group-text" id="textSizeControls" aria-label="Taille du texte">
     <span class="text-size-label">Taille du texte</span>
     <button type="button" id="textSizeDown" aria-label="Réduire la taille du texte" title="Réduire la taille du texte">A−</button>
     <button type="button" id="textSizeUp" aria-label="Augmenter la taille du texte" title="Augmenter la taille du texte">A+</button>
+  </div>
+
+  <div class="utility-group utility-group-actions save-controls" id="saveControls" aria-label="Sauvegarde et réinitialisation">
+    <button type="button" id="saveCalcBtn" class="utility-icon-btn" aria-label="Sauvegarder" title="Sauvegarder"><span aria-hidden="true">💾</span><span class="utility-label-sr">Sauvegarder</span></button>
+    <button type="button" id="loadCalcBtn" class="utility-icon-btn" aria-label="Charger" title="Charger"><span aria-hidden="true">📂</span><span class="utility-label-sr">Charger</span></button>
+    <button type="button" id="resetCalcBtn" class="reset-secondary utility-icon-btn" aria-label="Réinitialiser le simulateur et supprimer la sauvegarde" title="Réinitialiser le simulateur et supprimer la sauvegarde"><span aria-hidden="true">↻</span><span class="utility-label-sr">Réinitialiser le simulateur et supprimer la sauvegarde</span></button>
+    <span class="save-status" id="saveStatus"></span>
   </div>
 </div>
 
@@ -1745,19 +2164,23 @@ document.addEventListener('input', function(e){
     setTimeout(()=>{if(status)status.textContent=""},3000);
   }
 
-  function clearSaved(){
-    if(confirm("Supprimer la simulation sauvegardée sur cet appareil ?")){
-      localStorage.removeItem(KEY);
-      ["calculatriceTC_sauvegarde_v3","calculatriceTC_sauvegarde_v2","calculatriceTC_sauvegarde_v1"]
-        .forEach(k=>localStorage.removeItem(k));
-      if(status)status.textContent="Sauvegarde supprimée";
-      setTimeout(()=>{if(status)status.textContent=""},2200);
-    }
+  function resetAndClearSaved(){
+    const isEn=(document.documentElement.lang||'').toLowerCase().startsWith('en') || document.querySelector('#langSwitch [data-lang="en"]')?.classList.contains('active');
+    const message=isEn
+      ? "Reset the simulator and delete the saved simulation?\n\nThis action will erase the current data and the local save."
+      : "Réinitialiser le simulateur et supprimer la sauvegarde ?\n\nCette action effacera les données actuelles et la sauvegarde locale.";
+    if(!confirm(message)) return;
+    if(typeof resetAll==='function') resetAll();
+    localStorage.removeItem(KEY);
+    ["calculatriceTC_sauvegarde_v3","calculatriceTC_sauvegarde_v2","calculatriceTC_sauvegarde_v1"]
+      .forEach(k=>localStorage.removeItem(k));
+    if(status) status.textContent=isEn ? "Simulator reset · Save deleted" : "Simulateur réinitialisé · Sauvegarde supprimée";
+    setTimeout(()=>{if(status)status.textContent=""},2600);
   }
 
   document.getElementById("saveCalcBtn")?.addEventListener("click",save);
   document.getElementById("loadCalcBtn")?.addEventListener("click",load);
-  document.getElementById("clearCalcBtn")?.addEventListener("click",clearSaved);
+  document.getElementById("resetCalcBtn")?.addEventListener("click",resetAndClearSaved);
   window.tcSimulationSave=save;
   window.tcSimulationLoad=load;
 })();
@@ -2262,6 +2685,45 @@ window.tcSetLanguage=setLang;window.tcGetLanguage=()=>lang;window.tcTranslateTex
   });
 
   window.updateVehicleStageProgress=updateVehicleStageProgress;
+})();
+</script>
+
+
+<script id="mobile-responsive-v11-js">
+(function(){
+  function initMobileSummary(){
+    const summary=document.getElementById('tcPrepSummary');
+    if(!summary) return;
+    const head=summary.querySelector('.tc-prep-summary-head');
+    if(!head) return;
+    let btn=head.querySelector('.tc-summary-mobile-toggle');
+    if(!btn){
+      btn=document.createElement('button');
+      btn.type='button';
+      btn.className='tc-summary-mobile-toggle';
+      btn.textContent='⌄';
+      btn.setAttribute('aria-label','Afficher ou masquer le détail des phases');
+      btn.setAttribute('title','Afficher / masquer le détail');
+      head.appendChild(btn);
+      btn.addEventListener('click',function(){
+        summary.classList.toggle('mobile-collapsed');
+        btn.setAttribute('aria-expanded',summary.classList.contains('mobile-collapsed')?'false':'true');
+      });
+    }
+    if(window.matchMedia('(max-width:700px)').matches){
+      if(!summary.dataset.mobileInit){
+        summary.classList.add('mobile-collapsed');
+        summary.dataset.mobileInit='1';
+      }
+      btn.setAttribute('aria-expanded',summary.classList.contains('mobile-collapsed')?'false':'true');
+    }else{
+      summary.classList.remove('mobile-collapsed');
+      btn.setAttribute('aria-expanded','true');
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initMobileSummary);
+  else initMobileSummary();
+  window.addEventListener('resize',initMobileSummary,{passive:true});
 })();
 </script>
 
