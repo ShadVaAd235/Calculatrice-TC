@@ -1386,6 +1386,27 @@ body.tool-focus .tools-page.active{margin-top:0}
 }
 </style>
 
+<style id="utility-controls-v28-tablet">
+/* Tablet: one button shape and size across language, text, and actions. */
+@media (min-width:701px){
+  .top-utility-bar .utility-group{height:44px!important;padding:3px!important;gap:3px!important;box-sizing:border-box!important}
+  .top-utility-bar .utility-group-language .lang-switch{gap:3px!important}
+  .top-utility-bar .utility-group-language .lang-switch button,
+  .top-utility-bar .utility-group-text #textSizeDown,
+  .top-utility-bar .utility-group-text #textSizeUp,
+  .top-utility-bar .utility-group-actions .utility-icon-btn{
+    box-sizing:border-box!important;width:38px!important;min-width:38px!important;
+    height:36px!important;min-height:36px!important;padding:0!important;
+    border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    line-height:1!important;flex:0 0 38px!important;
+  }
+  .top-utility-bar .utility-group-language .lang-switch button,
+  .top-utility-bar .utility-group-text #textSizeDown,
+  .top-utility-bar .utility-group-text #textSizeUp{font-size:13px!important}
+  .top-utility-bar .utility-group-actions .utility-icon-btn{font-size:18px!important}
+  .top-utility-bar .utility-group-actions .utility-icon-btn > span[aria-hidden="true"]{width:20px!important;height:20px!important}
+}
+</style>
 </head>
 <body>
 <div class="top-utility-bar" id="topUtilityBar">
